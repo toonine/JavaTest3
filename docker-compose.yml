@@ -1,0 +1,16 @@
+version: "3"
+services:
+  mysql:
+    container_name: mysql-sakila
+    image: mysql-sakila:0.0.1
+    hostname: test1
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+    expose:
+    - "3306"
+  java:
+    container_name: java-salika
+    image: java-sakila
+    command: java -cp
