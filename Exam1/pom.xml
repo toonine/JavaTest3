@@ -13,7 +13,6 @@
 
     <name>Exam1</name>
     <url>http://www.example.com</url>
-
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
@@ -21,7 +20,6 @@
             <version>5.1.46</version>
         </dependency>
     </dependencies>
-
     <build>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>

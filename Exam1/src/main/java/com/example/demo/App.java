@@ -7,15 +7,24 @@ public class App {
     private static final String HOST_IP = System.getenv("DB_HOST_IP");
     private static final String PORT = System.getenv("DB_PORT");
     private static final String PASSWORD = System.getenv("DB_PASSWORD");
-    private static final String SCHEMA = System.getenv("DB_SCHEME");
+    private static final String SCHEMA = System.getenv("DB_SCHEMA");
     private static final String URL = "jdbc:mysql://" + HOST_IP + ":" + PORT + "/" + SCHEMA + "?useSSL=false";
 
-    private static final int COUNTRY_ID = Integer.parseInt("1");
-    private static final int CUSTOMER_ID = Integer.parseInt("1");
+    private static final int COUNTRY_ID = Integer.parseInt(System.getenv("COUNTRY_ID"));
+    private static final int CUSTOMER_ID = Integer.parseInt(System.getenv("CUSTOMER_ID"));
 
 
-    public static void main(String[] args) throws SQLException {
-
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("java程序启动");
+        Connection test = null;
+        do {
+            try {
+                test = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            } catch (Exception e) {
+                Thread.sleep(2000);
+                System.out.println("尝试连接mysql容器.......");
+            }
+        } while (test == null);
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT city, city_id, country FROM city INNER JOIN country on city.country_id = country.country_id WHERE country.country_id = " + COUNTRY_ID);
              ResultSet resultSet = preparedStatement.executeQuery()

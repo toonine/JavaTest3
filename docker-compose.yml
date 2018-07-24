@@ -3,7 +3,7 @@ services:
   mysql:
     container_name: mysql-sakila
     image: mysql-sakila:0.0.1
-    hostname: test1
+    hostname: mysql
     ports:
     - "3306:3306"
     environment:
@@ -12,5 +12,17 @@ services:
     - "3306"
   java:
     container_name: java-salika
-    image: java-sakila
-    command: java -cp
+    image: java-sakila:0.0.1
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    command: java -jar /app.jar
+    environment:
+      DB_PASSWORD: 12345
+      DB_USERNAME: root
+      DB_SCHEMA: sakila
+      DB_HOST_IP: mysql
+      DB_PORT: 3306
+      COUNTRY_ID: 1
+      CUSTOMER_ID: 1
